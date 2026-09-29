@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>Tutor — Home Tuition Center</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#687386;--primary:#4f46e5;--primary2:#6366f1;--danger:#dc2626;--ok:#16a34a;--line:#e7eaf0;--shadow:0 8px 25px #1d274012}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:86px}
+header{padding:22px 18px 12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-radius:0 0 24px 24px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff22;display:grid;place-items:center;font-size:25px}.brand h1{margin:0;font-size:25px}.brand small{opacity:.8}
+.content{padding:16px}.view{display:none}.view.active{display:block}.title{display:flex;justify-content:space-between;align-items:center;margin:4px 0 14px}.title h2{margin:0;font-size:22px}.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.stat{background:var(--card);padding:16px;border-radius:17px;box-shadow:var(--shadow)}.stat b{display:block;font-size:25px;margin-top:6px}.stat .icon{font-size:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.search{display:flex;gap:8px;margin-bottom:13px}.search input{flex:1}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--text);outline:none}textarea{min-height:80px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #4f46e51a}
+.btn{padding:11px 14px;border-radius:11px;font-weight:700}.primary{background:var(--primary);color:#fff}.secondary{background:#eef0ff;color:#4338ca}.danger{background:#fee2e2;color:#b91c1c}.ghost{background:transparent;color:var(--muted)}
+.student{display:flex;gap:12px;align-items:center}.avatar{width:48px;height:48px;border-radius:15px;background:#eef0ff;color:#4f46e5;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}.student-main{flex:1;min-width:0}.student-main b{display:block;font-size:16px}.student-main span{display:block;color:var(--muted);font-size:12px;margin-top:3px}.actions{display:flex;gap:6px;margin-top:12px}.actions button{flex:1}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:700}.paid{background:#dcfce7;color:#166534}.due{background:#fee2e2;color:#991b1b}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 6px max(8px,env(safe-area-inset-bottom));z-index:5}.nav{background:none;color:#7b8495;padding:6px;font-size:11px}.nav .ni{display:block;font-size:21px;margin-bottom:2px}.nav.active{color:var(--primary);font-weight:800}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.form-actions{display:flex;gap:8px;margin-top:15px}.form-actions button{flex:1}
+.modal{position:fixed;inset:0;background:#0f172a88;display:none;align-items:flex-end;z-index:10}.modal.open{display:flex}.sheet{background:var(--bg);width:min(720px,100%);margin:auto 0 0;padding:18px;border-radius:24px 24px 0 0;max-height:92vh;overflow:auto}.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sheet-head h3{margin:0}
+.detail-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.detail-row span:first-child{color:var(--muted);font-size:13px}.detail-row span:last-child{text-align:right;font-weight:600;white-space:pre-wrap}
+.empty{text-align:center;padding:35px 15px;color:var(--muted)}.empty .big{font-size:40px}
+.list{margin-top:10px}.notice{padding:12px;border-radius:12px;background:#fff7ed;color:#9a3412;font-size:13px;margin-bottom:12px}
+@media(max-width:430px){.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.grid{gap:9px}.stat{padding:13px}.content{padding:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand"><div class="logo">🎓</div><div><h1>Tutor</h1><small>Home Tuition Center Manager</small></div></div></header>
+<main class="content">
+<section id="dashboard" class="view active">
+<div class="title"><div><h2>Dashboard</h2><div class="muted" id="today"></div></div><button class="btn primary" onclick="openStudent()">＋ Student</button></div>
+<div class="grid">
+<div class="stat"><span class="icon">👨‍🎓</span><b id="sCount">0</b><span class="muted">Students</span></div>
+<div class="stat"><span class="icon">💰</span><b id="sFees">Rs 0</b><span class="muted">Monthly Fees</span></div>
+<div class="stat"><span class="icon">⚠️</span><b id="sDue">Rs 0</b><span class="muted">Total Due</span></div>
+<div class="stat"><span class="icon">📅</span><b id="sPresent">0</b><span class="muted">Present Today</span></div>
+</div>
+<div class="title" style="margin-top:22px"><h2>Fee Overview</h2></div>
+<div class="card" id="feeOverview"></div>
+<div class="title" style="margin-top:22px"><h2>Recent Students</h2><button class="btn ghost" onclick="showView('students')">View all</button></div>
+<div id="recent"></div>
+</section>
+
+<section id="students" class="view">
+<div class="title"><h2>Students</h2><button class="btn primary" onclick="openStudent()">＋ Add</button></div>
+<div class="search"><input id="search" placeholder="Search name, class, school or phone…" oninput="renderStudents()"></div>
+<div id="studentList"></div>
+</section>
+
+<section id="fees" class="view">
+<div class="title"><h2>Fees</h2></div>
+<div class="grid">
+<div class="stat"><span class="muted">Collected</span><b id="collected">Rs 0</b></div>
+<div class="stat"><span class="muted">Outstanding</span><b id="outstanding">Rs 0</b></div>
+</div>
+<div class="card" style="margin-top:12px"><div class="muted">Monthly fee status</div><div id="feeList" class="list"></div></div>
+</section>
+
+<section id="more" class="view">
+<div class="title"><h2>More</h2></div>
+<div class="card">
+<button class="btn secondary" style="width:100%;margin-bottom:8px" onclick="exportData()">⬇️ Backup data (JSON)</button>
+<button class="btn secondary" style="width:100%;margin-bottom:8px" onclick="exportCSV()">📊 Export students (CSV)</button>
+<button class="btn secondary" style="width:100%" onclick="document.getElementById('importFile').click()">⬆️ Restore backup</button>
+<input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
+</div>
+<div class="card">
+<h3 style="margin-top:0">Tutor Settings</h3>
+<div class="muted">All student information is stored locally on this device in your browser. Use Backup regularly so you don't lose your records.</div>
+</div>
+<div class="card">
+<h3 style="margin-top:0">Features</h3>
+<div class="detail-row"><span>Student records</span><span>✓</span></div>
+<div class="detail-row"><span>Fee tracking</span><span>✓</span></div>
+<div class="detail-row"><span>Attendance</span><span>✓</span></div>
+<div class="detail-row"><span>Search & edit</span><span>✓</span></div>
+<div class="detail-row"><span>Backup / CSV export</span><span>✓</span></div>
+</div>
+</section>
+</main>
+<nav class="bottom">
+<button class="nav active" data-view="dashboard" onclick="showView('dashboard')"><span class="ni">🏠</span>Home</button>
+<button class="nav" data-view="students" onclick="showView('students')"><span class="ni">👨‍🎓</span>Students</button>
+<button class="nav" data-view="fees" onclick="showView('fees')"><span class="ni">💰</span>Fees</button>
+<button class="nav" data-view="more" onclick="showView('more')"><span class="ni">☰</span>More</button>
+</nav>
+</div>
+
+<div class="modal" id="studentModal">
+<div class="sheet">
+<div class="sheet-head"><h3 id="modalTitle">Add Student</h3><button class="btn ghost" onclick="closeModal()">✕</button></div>
+<form id="studentForm">
+<input type="hidden" id="sid">
+<div class="formgrid">
+<div class="full"><label class="muted">Student Name *</label><input id="name" required placeholder="e.g. Ali Khan"></div>
+<div><label class="muted">Phone Number</label><input id="phone" inputmode="tel" placeholder="03xx-xxxxxxx"></div>
+<div><label class="muted">Class</label><input id="className" placeholder="e.g. 9th"></div>
+<div><label class="muted">School</label><input id="school" placeholder="School name"></div>
+<div><label class="muted">Monthly Fee (Rs)</label><input id="fee" type="number" min="0" placeholder="5000"></div>
+<div><label class="muted">Fee Status</label><select id="feeStatus"><option value="due">Due</option><option value="paid">Paid</option></select></div>
+<div class="full"><label class="muted">Parent / Guardian Name</label><input id="parent" placeholder="Parent name"></div>
+<div class="full"><label class="muted">Home Address</label><textarea id="address" placeholder="Complete home address"></textarea></div>
+<div class="full"><label class="muted">Subjects</label><input id="subjects" placeholder="Math, Physics, English"></div>
+<div><label class="muted">Tuition Time</label><input id="time" type="time"></div>
+<div><label class="muted">Admission Date</label><input id="admission" type="date"></div>
+<div class="full"><label class="muted">Notes</label><textarea id="notes" placeholder="Progress, special instructions, etc."></textarea></div>
+</div>
+<div class="form-actions"><button type="button" class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary">Save Student</button></div>
+</form>
+</div></div>
+
+<div class="modal" id="detailModal"><div class="sheet"><div class="sheet-head"><h3 id="detailTitle"></h3><button class="btn ghost" onclick="closeDetail()">✕</button></div><div id="detailBody"></div><div class="form-actions"><button class="btn secondary" id="markBtn"></button><button class="btn primary" id="editBtn">Edit</button></div></div></div>
+
+<script>
+const KEY="tutor_students_v1";
+let students=JSON.parse(localStorage.getItem(KEY)||"[]");
+const todayKey=()=>new Date().toISOString().slice(0,10);
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(students));renderAll()};
+const money=n=>"Rs "+Number(n||0).toLocaleString("en-PK");
+function showView(id){
+ document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.view===id));
+ renderAll();
+}
+function openStudent(id){
+ const s=students.find(x=>x.id===id);
+ document.getElementById("studentForm").reset();
+ document.getElementById("sid").value=s?.id||"";
+ document.getElementById("modalTitle").textContent=s?"Edit Student":"Add Student";
+ if(s) ["name","phone","className","school","fee","feeStatus","parent","address","subjects","time","admission","notes"].forEach(k=>document.getElementById(k).value=s[k]||"");
+ else document.getElementById("admission").value=todayKey();
+ document.getElementById("studentModal").classList.add("open");
+}
+function closeModal(){document.getElementById("studentModal").classList.remove("open")}
+document.getElementById("studentForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const id=document.getElementById("sid").value||Date.now().toString();
+ const old=students.find(x=>x.id===id);
+ const s={id,name:name.value.trim(),phone:phone.value.trim(),className:className.value.trim(),school:school.value.trim(),fee:Number(fee.value||0),feeStatus:feeStatus.value,parent:parent.value.trim(),address:address.value.trim(),subjects:subjects.value.trim(),time:time.value,admission:admission.value,notes:notes.value.trim(),attendance:old?.attendance||{}};
+ if(old) students=students.map(x=>x.id===id?s:x); else students.unshift(s);
+ save();closeModal();showView("students");
+});
+function renderStudents(){
+ const q=(document.getElementById("search")?.value||"").toLowerCase();
+ const arr=students.filter(s=>[s.name,s.phone,s.className,s.school,s.parent].join(" ").toLowerCase().includes(q));
+ const el=document.getElementById("studentList");
+ if(!arr.length){el.innerHTML='<div class="card empty"><div class="big">👨‍🎓</div><b>No students found</b><p>Add your first student to start.</p></div>';return}
+ el.innerHTML=arr.map(s=>`<div class="card"><div class="student"><div class="avatar">${esc(s.name[0]||"?")}</div><div class="student-main"><b>${esc(s.name)}</b><span>${esc(s.className||"Class not set")} • ${esc(s.school||"School not set")}</span><span>${esc(s.phone||"No phone")}</span></div><span class="badge ${s.feeStatus}">${s.feeStatus==="paid"?"PAID":"DUE"}</span></div><div class="actions"><button class="btn secondary" onclick="openDetail('${s.id}')">View</button><button class="btn ghost" onclick="openStudent('${s.id}')">Edit</button><button class="btn danger" onclick="deleteStudent('${s.id}')">Delete</button></div></div>`).join("");
+}
+function openDetail(id){
+ const s=students.find(x=>x.id===id);if(!s)return;
+ document.getElementById("detailTitle").textContent=s.name;
+ const present=s.attendance?.[todayKey()]===true;
+ document.getElementById("detailBody").innerHTML=[
+ ["Phone",s.phone||"—"],["Class",s.className||"—"],["School",s.school||"—"],["Monthly Fee",money(s.fee)],["Fee Status",s.feeStatus==="paid"?"Paid":"Due"],["Parent / Guardian",s.parent||"—"],["Home Address",s.address||"—"],["Subjects",s.subjects||"—"],["Tuition Time",s.time||"—"],["Admission Date",s.admission||"—"],["Notes",s.notes||"—"],["Today's Attendance",present?"Present":"Not marked"]
+ ].map(a=>`<div class="detail-row"><span>${a[0]}</span><span>${esc(a[1])}</span></div>`).join("");
+ const b=document.getElementById("markBtn");b.textContent=present?"✓ Mark Absent":"✓ Mark Present";b.onclick=()=>toggleAttendance(id);
+ document.getElementById("editBtn").onclick=()=>{closeDetail();openStudent(id)};
+ document.getElementById("detailModal").classList.add("open");
+}
+function closeDetail(){document.getElementById("detailModal").classList.remove("open")}
+function toggleAttendance(id){const s=students.find(x=>x.id===id);s.attendance=s.attendance||{};s.attendance[todayKey()]=s.attendance[todayKey()]!==true;save();openDetail(id)}
+function deleteStudent(id){if(confirm("Delete this student record? This cannot be undone.")){students=students.filter(s=>s.id!==id);save()}}
+function renderDashboard(){
+ document.getElementById("today").textContent=new Date().toLocaleDateString("en-PK",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+ const fees=students.reduce((a,s)=>a+Number(s.fee||0),0), due=students.filter(s=>s.feeStatus==="due").reduce((a,s)=>a+Number(s.fee||0),0), present=students.filter(s=>s.attendance?.[todayKey()]).length;
+ sCount.textContent=students.length;sFees.textContent=money(fees);sDue.textContent=money(due);sPresent.textContent=present;
+ document.getElementById("feeOverview").innerHTML=`<div style="display:flex;justify-content:space-between"><span>Paid students</span><b>${students.filter(s=>s.feeStatus==="paid").length}</b></div><div style="height:8px"></div><div style="display:flex;justify-content:space-between"><span>Due students</span><b>${students.filter(s=>s.feeStatus==="due").length}</b></div>`;
+ document.getElementById("recent").innerHTML=students.slice(0,5).map(s=>`<div class="card student" onclick="openDetail('${s.id}')"><div class="avatar">${esc(s.name[0]||"?")}</div><div class="student-main"><b>${esc(s.name)}</b><span>${esc(s.className||"Class")} • ${money(s.fee)}/month</span></div><span class="badge ${s.feeStatus}">${s.feeStatus==="paid"?"PAID":"DUE"}</span></div>`).join("") || '<div class="card empty">No students yet.</div>';
+}
+function renderFees(){
+ const col=students.filter(s=>s.feeStatus==="paid").reduce((a,s)=>a+Number(s.fee||0),0),out=students.filter(s=>s.feeStatus==="due").reduce((a,s)=>a+Number(s.fee||0),0);
+ collected.textContent=money(col);outstanding.textContent=money(out);
+ feeList.innerHTML=students.map(s=>`<div class="detail-row"><span>${esc(s.name)}<br><small>${esc(s.className||"")}</small></span><span>${money(s.fee)} <button class="btn ${s.feeStatus==="paid"?"danger":"primary"}" style="padding:5px 8px;margin-left:5px" onclick="toggleFee('${s.id}')">${s.feeStatus==="paid"?"Mark due":"Mark paid"}</button></span></div>`).join("")||'<div class="empty">No student fee records.</div>';
+}
+function toggleFee(id){const s=students.find(x=>x.id===id);s.feeStatus=s.feeStatus==="paid"?"due":"paid";save()}
+function renderAll(){renderDashboard();renderStudents();renderFees()}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function exportData(){const blob=new Blob([JSON.stringify(students,null,2)],{type:"application/json"});download(blob,"tutor-backup.json")}
+function exportCSV(){
+ const headers=["Name","Phone","Class","School","Monthly Fee","Fee Status","Parent","Address","Subjects","Tuition Time","Admission Date","Notes"];
+ const rows=students.map(s=>[s.name,s.phone,s.className,s.school,s.fee,s.feeStatus,s.parent,s.address,s.subjects,s.time,s.admission,s.notes]);
+ const csv=[headers,...rows].map(r=>r.map(x=>`"${String(x??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+ download(new Blob([csv],{type:"text/csv"}),"tutor-students.csv");
+}
+function download(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x))throw Error();students=x;save();alert("Backup restored successfully.");}catch{alert("Invalid Tutor backup file.")}};r.readAsText(f);e.target.value=""}
+renderAll();
+</script>
+</body></html>
